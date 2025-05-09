@@ -21,22 +21,22 @@ namespace MathClasses
         Byte GetBlue() const { return colour >> 8; }
         Byte GetAlpha() const { return colour; }
 
-        void SetRed(Byte red) {
+        void SetRed(const Byte red) {
 	        colour = colour & ~(0b11111111 << 24);
             colour = colour | (red << 24);
         }
 
-        void SetGreen(Byte green) {
+        void SetGreen(const Byte green) {
             colour = colour & ~(0b11111111 << 16);
             colour = colour | (green << 16);
         }
 
-        void SetBlue(Byte blue) {
+        void SetBlue(const Byte blue) {
             colour = colour & ~(0b11111111 << 8);
             colour = colour | (blue << 8);
         }
 
-        void SetAlhpa(Byte alpha) {
+        void SetAlpha(const Byte alpha) {
             colour = colour & ~(0b11111111 << 0);
             colour = colour | alpha;
         }
