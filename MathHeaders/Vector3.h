@@ -1,5 +1,7 @@
 #pragma once
 
+#define TOLERENCE 0.000005
+
 namespace MathClasses
 {
     struct Vector3
@@ -53,7 +55,7 @@ namespace MathClasses
         Vector3 operator/(const float scale) const { return { x / scale, y / scale, z / scale }; }
 
         bool operator==(const Vector3& other) const {
-	        return (abs(x - other.x) < 0.00006 && abs(y - other.y) < 0.00006 && abs(z - other.z) < 0.00006);
+	        return (abs(x - other.x) < TOLERENCE && abs(y - other.y) < TOLERENCE && abs(z - other.z) < TOLERENCE);
         }
 
         bool operator!=(const Vector3& other) const {

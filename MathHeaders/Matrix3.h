@@ -2,12 +2,14 @@
 
 #include "Vector3.h"
 
+#define TOLERENCE 0.000005
+
 namespace MathClasses
 {
     struct Matrix3
     {
         float m1, m2, m3, m4, m5, m6, m7, m8, m9;
-        float* mm[3] = {&m1, &m5, &m7};
+        float* mm[3] = {&m1, &m4, &m7};
 
         Matrix3() { m1 = m2 = m3 = m4 = m5 = m6 = m7 = m8 = m9 = 0; }
 
@@ -31,7 +33,7 @@ namespace MathClasses
         explicit operator const float* () const { return &m1; }
 
         static Matrix3 MakeIdentity() { return {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f}; }
-        Matrix3 Transposed() { return { m1, m4, m7, m2, m5, m8, m3, m6, m9 }; }
+        Matrix3 Transposed() const { return { m1, m4, m7, m2, m5, m8, m3, m6, m9 }; }
 
         static Matrix3 MakeScale(const Vector3& vec) {
             return {
@@ -107,39 +109,39 @@ namespace MathClasses
 
         Vector3 operator*(const Vector3& vec) const {
             return {
-            	(m1 * vec.x + m2 * vec.y + m3 * vec.z),
-            	(m4 * vec.x + m5 * vec.y + m6 * vec.z),
-            	(m7 * vec.x + m8 * vec.y + m9 * vec.z)
+            	(m1 * vec.x + m4 * vec.y + m7 * vec.z),
+            	(m2 * vec.x + m5 * vec.y + m8 * vec.z),
+            	(m3 * vec.x + m6 * vec.y + m9 * vec.z)
             };
         }
 
         Matrix3 operator*(const Matrix3& other) const {
             return {
-                (m1 * other.m1 + m2 * other.m4 + m3 * other.m7),
-            	(m1 * other.m2 + m2 * other.m5 + m3 * other.m8),
-            	(m1 * other.m3 + m2 * other.m6 + m3 * other.m9),
+                (other.m1 * m1 + other.m2 * m4 + other.m3 * m7),
+            	(other.m1 * m2 + other.m2 * m5 + other.m3 * m8),
+            	(other.m1 * m3 + other.m2 * m6 + other.m3 * m9),
 
-                (m4 * other.m1 + m5 * other.m4 + m6 * other.m7),
-            	(m4 * other.m2 + m5 * other.m5 + m6 * other.m8),
-            	(m4 * other.m3 + m5 * other.m6 + m6 * other.m9),
+                (other.m4 * m1 + other.m5 * m4 + other.m6 * m7),
+            	(other.m4 * m2 + other.m5 * m5 + other.m6 * m8),
+            	(other.m4 * m3 + other.m5 * m6 + other.m6 * m9),
 
-            	(m7 * other.m1 + m8 * other.m4 + m9 * other.m7),
-            	(m7 * other.m2 + m8 * other.m5 + m9 * other.m8),
-            	(m7 * other.m3 + m8 * other.m6 + m9 * other.m9),
+            	(other.m7 * m1 + other.m8 * m4 + other.m9 * m7),
+            	(other.m7 * m2 + other.m8 * m5 + other.m9 * m8),
+            	(other.m7 * m3 + other.m8 * m6 + other.m9 * m9),
             };
         }
 
         bool operator==(const Matrix3& other) const {
             return (
-                abs(m1 - other.m1) < 0.00006 &&
-                abs(m2 - other.m2) < 0.00006 &&
-                abs(m3 - other.m3) < 0.00006 &&
-                abs(m4 - other.m4) < 0.00006 &&
-                abs(m5 - other.m5) < 0.00006 &&
-                abs(m6 - other.m6) < 0.00006 &&
-                abs(m7 - other.m7) < 0.00006 &&
-                abs(m8 - other.m8) < 0.00006 &&
-                abs(m9 - other.m9) < 0.00006
+                abs(m1 - other.m1) < TOLERENCE &&
+                abs(m2 - other.m2) < TOLERENCE &&
+                abs(m3 - other.m3) < TOLERENCE &&
+                abs(m4 - other.m4) < TOLERENCE &&
+                abs(m5 - other.m5) < TOLERENCE &&
+                abs(m6 - other.m6) < TOLERENCE &&
+                abs(m7 - other.m7) < TOLERENCE &&
+                abs(m8 - other.m8) < TOLERENCE &&
+                abs(m9 - other.m9) < TOLERENCE
             );
         }
 
@@ -150,6 +152,5 @@ namespace MathClasses
 		const float& operator[](const size_t value) const {
             return (&m1)[value];
         }
-
     };
 }

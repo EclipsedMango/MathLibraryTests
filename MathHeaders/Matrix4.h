@@ -1,4 +1,7 @@
 #pragma once
+
+#define TOLERENCE 0.000005
+
 namespace MathClasses
 {
     struct Matrix4
@@ -119,55 +122,55 @@ namespace MathClasses
 
         Vector4 operator*(const Vector4& vec) const {
             return {
-            	(m1 * vec.x + m2 * vec.y + m3 * vec.z + m4 * vec.w),
-            	(m5 * vec.x + m6 * vec.y + m7 * vec.z + m8 * vec.w),
-            	(m9 * vec.x + m10 * vec.y + m11 * vec.z + m12 * vec.w),
-                (m13 * vec.x + m14 * vec.y + m15 * vec.z + m16 * vec.w)
+            	(m1 * vec.x + m5 * vec.y + m9 * vec.z + m13 * vec.w),
+            	(m2 * vec.x + m6 * vec.y + m10 * vec.z + m14 * vec.w),
+            	(m3 * vec.x + m7 * vec.y + m11 * vec.z + m15 * vec.w),
+                (m4 * vec.x + m8 * vec.y + m12 * vec.z + m16 * vec.w)
             };
         }
 
         Matrix4 operator*(const Matrix4& other) const {
             return {
-				(m1 * other.m1 + m2 * other.m5 + m3 * other.m9 + m4 * other.m13),
-				(m1 * other.m2 + m2 * other.m6 + m3 * other.m10 + m4 * other.m14),
-				(m1 * other.m3 + m2 * other.m7 + m3 * other.m11 + m4 * other.m15),
-				(m1 * other.m4 + m2 * other.m8 + m3 * other.m12 + m4 * other.m16),
+				(other.m1 * m1 + other.m2 * m5 + other.m3 * m9 + other.m4 * m13),
+				(other.m1 * m2 + other.m2 * m6 + other.m3 * m10 + other.m4 * m14),
+				(other.m1 * m3 + other.m2 * m7 + other.m3 * m11 + other.m4 * m15),
+				(other.m1 * m4 + other.m2 * m8 + other.m3 * m12 + other.m4 * m16),
 
-				(m5 * other.m1 + m6 * other.m5 + m7 * other.m9 + m8 * other.m13),
-				(m5 * other.m2 + m6 * other.m6 + m7 * other.m10 + m8 * other.m14),
-				(m5 * other.m3 + m6 * other.m7 + m7 * other.m11 + m8 * other.m15),
-				(m5 * other.m4 + m6 * other.m8 + m7 * other.m12 + m8 * other.m16),
+				(other.m5 * m1 + other.m6 * m5 + other.m7 * m9 + other.m8 * m13),
+				(other.m5 * m2 + other.m6 * m6 + other.m7 * m10 + other.m8 * m14),
+				(other.m5 * m3 + other.m6 * m7 + other.m7 * m11 + other.m8 * m15),
+				(other.m5 * m4 + other.m6 * m8 + other.m7 * m12 + other.m8 * m16),
 
-				(m9 * other.m1 + m10 * other.m5 + m11 * other.m9 + m12 * other.m13),
-				(m9 * other.m2 + m10 * other.m6 + m11 * other.m10 + m12 * other.m14),
-				(m9 * other.m3 + m10 * other.m7 + m11 * other.m11 + m12 * other.m15),
-				(m9 * other.m4 + m10 * other.m8 + m11 * other.m12 + m12 * other.m16),
+				(other.m9 * m1 + other.m10 * m5 + other.m11 * m9 + other.m12 * m13),
+				(other.m9 * m2 + other.m10 * m6 + other.m11 * m10 + other.m12 * m14),
+				(other.m9 * m3 + other.m10 * m7 + other.m11 * m11 + other.m12 * m15),
+				(other.m9 * m4 + other.m10 * m8 + other.m11 * m12 + other.m12 * m16),
 
-				(m13 * other.m1 + m14 * other.m5 + m15 * other.m9 + m16 * other.m13),
-				(m13 * other.m2 + m14 * other.m6 + m15 * other.m10 + m16 * other.m14),
-				(m13 * other.m3 + m14 * other.m7 + m15 * other.m11 + m16 * other.m15),
-				(m13 * other.m4 + m14 * other.m8 + m15 * other.m12 + m16 * other.m16),
+				(other.m13 * m1 + other.m14 * m5 + other.m15 * m9 + other.m16 * m13),
+				(other.m13 * m2 + other.m14 * m6 + other.m15 * m10 + other.m16 * m14),
+				(other.m13 * m3 + other.m14 * m7 + other.m15 * m11 + other.m16 * m15),
+				(other.m13 * m4 + other.m14 * m8 + other.m15 * m12 + other.m16 * m16),
             };
         }
 
 		bool operator==(const Matrix4& other) const {
             return (
-                abs(m1 - other.m1) < 0.00006 &&
-                abs(m2 - other.m2) < 0.00006 &&
-                abs(m3 - other.m3) < 0.00006 &&
-                abs(m4 - other.m4) < 0.00006 &&
-                abs(m5 - other.m5) < 0.00006 &&
-                abs(m6 - other.m6) < 0.00006 &&
-                abs(m7 - other.m7) < 0.00006 &&
-                abs(m8 - other.m8) < 0.00006 &&
-                abs(m9 - other.m9) < 0.00006 &&
-                abs(m10 - other.m10) < 0.00006 &&
-                abs(m11 - other.m11) < 0.00006 &&
-                abs(m12 - other.m12) < 0.00006 &&
-                abs(m13 - other.m13) < 0.00006 &&
-                abs(m14 - other.m14) < 0.00006 &&
-                abs(m15 - other.m15) < 0.00006 &&
-                abs(m16 - other.m16) < 0.00006
+                abs(m1 - other.m1) < TOLERENCE &&
+                abs(m2 - other.m2) < TOLERENCE &&
+                abs(m3 - other.m3) < TOLERENCE &&
+                abs(m4 - other.m4) < TOLERENCE &&
+                abs(m5 - other.m5) < TOLERENCE &&
+                abs(m6 - other.m6) < TOLERENCE &&
+                abs(m7 - other.m7) < TOLERENCE &&
+                abs(m8 - other.m8) < TOLERENCE &&
+                abs(m9 - other.m9) < TOLERENCE &&
+                abs(m10 - other.m10) < TOLERENCE &&
+                abs(m11 - other.m11) < TOLERENCE &&
+                abs(m12 - other.m12) < TOLERENCE &&
+                abs(m13 - other.m13) < TOLERENCE &&
+                abs(m14 - other.m14) < TOLERENCE &&
+                abs(m15 - other.m15) < TOLERENCE &&
+                abs(m16 - other.m16) < TOLERENCE
             );
         }
 

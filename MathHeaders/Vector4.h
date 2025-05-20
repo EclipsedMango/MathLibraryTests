@@ -1,5 +1,7 @@
 #pragma once
 
+#define TOLERENCE 0.000005
+
 namespace MathClasses
 {
     struct Vector4
@@ -21,13 +23,13 @@ namespace MathClasses
             return x * other.x + y * other.y + z * other.z;
         }
 
-        float Magnitude() const { return sqrt(x * x + y * y + z * z); }
+        float Magnitude() const { return sqrt(x * x + y * y + z * z + w * w); }
 
         explicit operator float* () { return &x; }
         explicit operator const float* () const { return &x; }
 
         void Normalise() {
-            float mag = this->Magnitude();
+            const float mag = this->Magnitude();
             if (mag == 0.0f) { return; }
             x /= mag;
             y /= mag;
@@ -37,7 +39,7 @@ namespace MathClasses
 
         Vector4 Normalised() const {
             float mag = this->Magnitude();
-			if (mag == 0.0f) { return {0.0f, 0.0f, 0.0f, w / mag}; }
+			if (mag == 0.0f) { return {0.0f, 0.0f, 0.0f, w}; }
             return { x / mag, y / mag, z / mag, w / mag};
         }
 
@@ -62,8 +64,11 @@ namespace MathClasses
         }
 
         bool operator==(const Vector4& other) const {
-            return (abs(x - other.x) < 0.00006 && abs(y - other.y) < 0.00006 && 
-					abs(z - other.z) < 0.00006 && abs(w - other.w) < 0.00006);
+            return (abs(x - other.x) < TOLERENCE && 
+                    abs(y - other.y) < TOLERENCE &&
+					abs(z - other.z) < TOLERENCE && 
+                    abs(w - other.w) < TOLERENCE
+                );
     	}
 
         bool operator!=(const Vector4& other) const {
